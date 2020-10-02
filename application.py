@@ -1,11 +1,11 @@
+#importing neccessary modules and the seperately created backend File
 import tkinter as tk
 from tkinter import messagebox
 import soh_registeration
 import datetime as dt
 from tkinter.font import BOLD
 
-
-
+#setting the font styles and formatting
 LARGE_FONT= ("TIMES NEW ROMAN", 20, tk.UNDERLINE, BOLD)
 SUB_HEADING=("Times New Roman", 14)
 TEXT=("Times New Roman",10)
@@ -13,7 +13,7 @@ TEXT=("Times New Roman",10)
 
 
 class Scoopsofhappiness(tk.Tk):
-   
+   #main frame in which all the other frames will be called one by one
     
 
     
@@ -26,7 +26,8 @@ class Scoopsofhappiness(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-
+         #Welcomepage, PageOne, PageTwo, Menucard, Welcomepage_C, customerdetail, MakeyourChoice -> total frames that are being called, in case you create another frame please include
+         #it below
         for F in (Welcomepage, PageOne, PageTwo, Menucard, Welcomepage_C, customerdetail, MakeyourChoice):
 
             frame = F(container, self)
@@ -64,8 +65,9 @@ class Welcomepage(tk.Frame):
 
 
 class PageOne(tk.Frame):
-
+   #log-in page
     def check(self):
+         #function to authenticate user account
         if(login_un.get().isalpha() and lpd.get().isalnum()):
             c=soh_registeration.search(login_un.get(),lpd.get())
             username.delete(0, tk.END)
@@ -81,6 +83,7 @@ class PageOne(tk.Frame):
         
     
     def __init__(self, parent, controller):
+        #login frame
         tk.Frame.__init__(self, parent)
         tk.Frame.configure(self, bg="#99CCFF")
         label = tk.Label(self, text="WELCOME, SET YOUR SHOP", font=LARGE_FONT,fg="#fF0000", bg="#99CCFF")
@@ -110,7 +113,7 @@ class PageOne(tk.Frame):
 
 
 class PageTwo(tk.Frame):
-    
+    #registration page (ice cream vendor) parameters taken as input -> Username, Password, Mobile, Aadhar Card Number, Shop name, Email
     def e_detail(self):
         flag=0
         msg=""
@@ -205,7 +208,7 @@ class PageTwo(tk.Frame):
         
         
 class Menucard(tk.Frame):
-    
+    #frame for setting the custom menu card.. here the vendor can add/remove the ice cream flavours based upon the availability
     def get_selected_row(self,event):
         global sel_tuple
         index=list1.curselection()[0]
@@ -282,7 +285,7 @@ class Menucard(tk.Frame):
         button1.grid(row=12, column=0)
         
 class Welcomepage_C(tk.Frame):
-    
+    #Welcome Page (Change to Customer Screen or change the vendor)
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
         tk.Frame.configure(self, bg="#99CCFF")
@@ -298,7 +301,7 @@ class Welcomepage_C(tk.Frame):
         b2.pack(pady=10,padx=10)
 
 class customerdetail(tk.Frame):
-    
+    #Billing page-1(Enter customer details that are necessary for billing)
     def detailssubmit(self):
         if(cus_mob.get().isalnum() and len(cus_mob.get())==10):
             soh_registeration.insert_c(cus_name.get(),cus_mob.get())
@@ -342,6 +345,7 @@ class customerdetail(tk.Frame):
         
 
 class MakeyourChoice(tk.Frame):
+   #billing page-2 select the flavours that you want to add in your ice-cream and get the bill generated automatically
     total=0
     def get_selected_row(self,event):
         try:
